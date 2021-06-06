@@ -11,11 +11,7 @@ router.get('/', (req, res) => {
     if (error) {
       next(error);
     } else {
-      if (false) {
-        res.redirect('/users/login');
-      } else {
-        res.render('articles', { articles: articles });
-      }
+      res.render('articles', { articles: articles });
     }
   });
 });
@@ -28,6 +24,7 @@ router.get('/:id', (req, res, next) => {
   let id = req.params.id;
   Article.findById(id)
     .populate('comments')
+    .populate('author', 'firstName lastName')
     .exec((error, data) => {
       if (error) {
         next(error);
@@ -47,6 +44,7 @@ router.use(auth.checkLogin);
 // });
 
 router.post('/new', (req, res, next) => {
+  req.body.author = req.user.id;
   Article.create(req.body, (error, article) => {
     if (error) {
       next(error);
@@ -69,7 +67,7 @@ router.post('/new', (req, res, next) => {
 //     });
 // });
 
-router.get('/:id/edit', (req, res, next) => {
+router.get('/:id/edit', auth.ownerArticleCheck, (req, res, next) => {
   let id = req.params.id;
   Article.findById(id, (error, article) => {
     if (error) {
@@ -80,18 +78,18 @@ router.get('/:id/edit', (req, res, next) => {
   });
 });
 
-// router.post('/:id', (req, res, next) => {
-//   let id = req.params.id;
-//   Article.findByIdAndUpdate(id, req.body, (error, article) => {
-//     if (error) {
-//       next(error);
-//     } else {
-//       res.redirect('/articles/' + article.id);
-//     }
-//   });
-// });
+router.post('/:id', auth.ownerArticleCheck, (req, res, next) => {
+  let id = req.params.id;
+  Article.findByIdAndUpdate(id, req.body, (error, article) => {
+    if (error) {
+      next(error);
+    } else {
+      res.redirect('/articles/' + article.id);
+    }
+  });
+});
 
-router.get('/:id/delete', (req, res, next) => {
+router.get('/:id/delete', auth.ownerArticleCheck, (req, res, next) => {
   let id = req.params.id;
   Article.findByIdAndRemove(id, (error, article) => {
     if (error) {
@@ -111,6 +109,7 @@ router.get('/:id/delete', (req, res, next) => {
 router.post('/:id/comment', (req, res, next) => {
   let id = req.params.id;
   req.body.articleId = id;
+  req.body.author = req.user.id;
   Comment.create(req.body, (error, comment) => {
     if (error) {
       next(error);
