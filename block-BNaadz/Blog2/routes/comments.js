@@ -6,7 +6,7 @@ let auth = require('../middlewares/auth');
 
 router.use(auth.checkLogin);
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', auth.ownerCommentCheck, (req, res, next) => {
   let id = req.params.id;
   Comment.findById(id, (error, comment) => {
     if (error) {
@@ -17,7 +17,7 @@ router.get('/:id', (req, res, next) => {
   });
 });
 
-router.post('/:id', (req, res, next) => {
+router.post('/:id',auth.ownerCommentCheck, (req, res, next) => {
   let id = req.params.id;
   Comment.findByIdAndUpdate(id, req.body, (error, comment) => {
     if (error) {
@@ -28,7 +28,7 @@ router.post('/:id', (req, res, next) => {
   });
 });
 
-router.get('/:id/delete', (req, res, next) => {
+router.get('/:id/delete',auth.ownerCommentCheck, (req, res, next) => {
   let id = req.params.id;
   Comment.findByIdAndRemove(id, (error, comment) => {
     if (error) {

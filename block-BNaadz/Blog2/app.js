@@ -6,6 +6,7 @@ var logger = require('morgan');
 let mongoose = require('mongoose');
 let session = require('express-session');
 let MongoStore = require('connect-mongo');
+let auth = require('./middlewares/auth');
 
 require('dotenv').config();
 
@@ -49,6 +50,8 @@ app.use(
     store: MongoStore.create({ mongoUrl: 'mongodb://localhost/Blog3' }),
   })
 );
+
+app.use(auth.userInfo);
 
 app.use('/', indexRouter);
 app.use('/articles', articleRouter);

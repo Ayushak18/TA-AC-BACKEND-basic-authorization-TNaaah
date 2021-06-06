@@ -12,7 +12,11 @@ let articleSchema = new Schema(
         ref: 'comment',
       },
     ],
-    author: String,
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
   },
   { timestamps: true }
 );

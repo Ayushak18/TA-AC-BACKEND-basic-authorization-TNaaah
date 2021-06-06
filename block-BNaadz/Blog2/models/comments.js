@@ -7,6 +7,7 @@ let commentSchema = new Schema(
     articleId: {
       type: Schema.Types.ObjectId,
     },
+    author: { type: Schema.Types.ObjectId, ref: 'user', required: true },
   },
   { timestamps: true }
 );
