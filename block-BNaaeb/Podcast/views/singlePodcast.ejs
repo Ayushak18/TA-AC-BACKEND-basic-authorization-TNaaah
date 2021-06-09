@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Premium Podcasts</title>
+    <style>
+      body {
+        text-align: center;
+      }
+      a {
+        text-decoration: none;
+        color: rgb(64, 187, 224);
+        font-size: 16px;
+        margin: 0 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1><%= podcast.title %></h1>
+    <p><%= podcast.description %></p>
+    <div>
+      <button>
+        <a href="/podcast/<%= podcast._id %>/edit">Edit</a>
+      </button>
+      <button>
+        <a href="/podcast/<%= podcast._id %>/delete">Delete</a>
+      </button>
+      <button>
+        <a href="/podcast">Back</a>
+      </button>
+    </div>
+  </body>
+</html>

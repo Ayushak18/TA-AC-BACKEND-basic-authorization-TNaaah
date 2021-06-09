@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PodCasts</title>
+    <style>
+      body {
+        text-align: center;
+      }
+      a {
+        text-decoration: none;
+        color: black;
+      }
+      .podcast-add {
+        margin: 50px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>List of all the PodCasts</h1>
+    <button>
+      <a href="/podcast/free">Free PodCasts</a>
+    </button>
+    <button>
+      <a href="/podcast/vip">VIP PodCasts</a>
+    </button>
+    <button>
+      <a href="/podcast/premium">Premium PodCasts</a>
+    </button>
+
+    <div class="podcast-add">
+      <h2>Add Podcast</h2>
+      <form action="/podcast" method="POST">
+        <input type="text" placeholder="Title" name="title" />
+        <input type="text" placeholder="Description" name="description" />
+        <select name="type">
+          <option value="Free">Free</option>
+          <option value="VIP">VIP</option>
+          <option value="Premium">Premium</option>
+        </select>
+        <input type="submit" value="Add Podcast" />
+      </form>
+    </div>
+  </body>
+</html>
